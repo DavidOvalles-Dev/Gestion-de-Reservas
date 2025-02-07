@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert2";
 
 const UpdateRoomForm = () => {
   const { roomId } = useParams();
@@ -11,6 +13,7 @@ const UpdateRoomForm = () => {
     price: "",
     available: false,
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchRooms = async () => {
@@ -62,12 +65,15 @@ const UpdateRoomForm = () => {
 
     // Validación básica
     if (!formData.room_number || !formData.capacity || !formData.price) {
-      alert("Todos los campos son obligatorios.");
       return;
     }
 
     if (formData.capacity < 1 || formData.capacity > 12) {
-      alert("La capacidad debe estar entre 1 y 12.");
+      swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "La capacidad debe estar entre 1 y 12 personas.",
+      });
       return;
     }
 
@@ -78,11 +84,19 @@ const UpdateRoomForm = () => {
         formData
       );
       console.log("API Response:", response);
-      alert("Habitación actualizada correctamente.");
+      swal.fire({
+        icon: "success",
+        title: "Habitación Actualizada",
+        text: "La habitación ha sido actualizada exitosamente.",
+      });
       window.location.href = "/rooms";
     } catch (error) {
       console.error("Error updating room:", error);
-      alert("Error al actualizar la habitación.");
+      return swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error al actualizar la habitación.",
+      });
     }
   };
 

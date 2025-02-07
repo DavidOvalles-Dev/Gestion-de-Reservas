@@ -1,5 +1,7 @@
-import react, { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert2";
 
 const CreateRoomForm = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,7 @@ const CreateRoomForm = () => {
     price: "",
     available: true,
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -29,13 +32,19 @@ const CreateRoomForm = () => {
         formData
       );
       console.log("API Response:", response.data);
+      swal.fire({
+        icon: "success",
+        title: "Habitación Creada",
+        text: "La habitación ha sido creada exitosamente.",
+      });
+      navigate("/rooms");
     } catch (error) {
       console.error("Error creating room:", error);
-      return (
-        <div className="alert alert-danger" role="alert">
-          Error creando la habitación
-        </div>
-      );
+      return swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Error al crear la habitación.",
+      });
     }
   };
 
