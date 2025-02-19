@@ -83,7 +83,7 @@ El proyecto está desarrollado utilizando tecnologías modernas como React.js pa
 
 
 ```bash
-git clone https://github.com/tu-usuario/sistema-de-reservas.git
+git clone https://github.com/DavidOvalles-Dev/Gestion-de-Reservas.git
 cd sistema-de-reservas
 ```
 ### 2. Configurar el Backend
