@@ -4,12 +4,10 @@ require_once ROOT_PATH . '/models/ReservationModel.php';
 class ReservationController {
     private $reservationModel;
 
-    // Constructor: Inicializa el modelo
     public function __construct($pdo) {
         $this->reservationModel = new ReservationModel($pdo);
     }
 
-    // Obtener todas las reservas
     public function getAllReservations() {
         $reservations = $this->reservationModel->getAllReservations();
         echo json_encode($reservations);
@@ -26,53 +24,46 @@ class ReservationController {
 
     public function createReservation() {
         $data = json_decode(file_get_contents('php://input'), true);
-    
-        // Validar que todos los campos necesarios estén presentes
-        if (!isset($data['room_id'], $data['user_name'], $data['start_date'], $data['end_date'], $data['start_time'], $data['end_time'])) {
+
+        if (!isset($data['room_id'], $data['user_name'], $data['start_date'], $data['end_date'], $data['start_time'], $data['end_time'], $data['price'])) {
             echo json_encode(['error' => 'Faltan datos requeridos']);
             return;
         }
-    
-        // Extraer los datos
+
         $room_id = $data['room_id'];
         $user_name = $data['user_name'];
         $start_date = $data['start_date'];
         $end_date = $data['end_date'];
         $start_time = $data['start_time'];
         $end_time = $data['end_time'];
-    
-        // Llamar al modelo para crear la reserva
-        $id = $this->reservationModel->createReservation($room_id, $user_name, $start_date, $end_date, $start_time, $end_time);
-    
-        // Devolver una respuesta con el ID de la nueva reserva
+        $price = $data['price'];
+
+        $id = $this->reservationModel->createReservation($room_id, $user_name, $start_date, $end_date, $start_time, $end_time, $price);
+
         echo json_encode(['id' => $id, 'message' => 'Reserva creada']);
     }
-    
+
     public function updateReservation() {
-        // Obtener los datos enviados desde Postman
         $data = json_decode(file_get_contents('php://input'), true);
-    
-        // Validar que el ID esté presente
+
         if (!isset($data['id'])) {
             echo json_encode(['error' => 'ID de la reservación no proporcionado']);
             return;
         }
-    
+
         $id = $data['id'];
-        unset($data['id']); // Eliminar el ID del array de datos
-    
-        // Validar que todos los campos necesarios estén presentes
-        $requiredFields = ['room_id', 'user_name', 'start_date', 'end_date', 'start_time', 'end_time', 'status'];
+        unset($data['id']); 
+
+        $requiredFields = ['room_id', 'user_name', 'start_date', 'end_date', 'start_time', 'end_time', 'status', 'price'];
         foreach ($requiredFields as $field) {
             if (!isset($data[$field])) {
                 echo json_encode(['error' => "Falta el campo: $field"]);
                 return;
             }
         }
-    
-        // Llamar al modelo para actualizar la reservación
+
         $success = $this->reservationModel->updateReservation($id, $data);
-    
+
         if ($success) {
             echo json_encode(['message' => 'Reservación actualizada correctamente']);
         } else {
@@ -80,14 +71,57 @@ class ReservationController {
         }
     }
 
-    public function deleteReservation() {
-        $id = $_GET['id'];
-    
-        if ($this->reservationModel->deleteReservation($id)) {
-            echo json_encode(['message' => 'Reserva eliminada']);
+    public function deleteReservation($id) {
+        $success = $this->reservationModel->deleteReservation($id);
+
+        if ($success) {
+            echo json_encode(['message' => 'Reservación eliminada correctamente']);
         } else {
-            echo json_encode(['error' => 'No se pudo eliminar la reserva']);
+            echo json_encode(['error' => 'Error al eliminar la reservación']);
         }
     }
+
+    public function deleteCancelledReservations() {
+        try {
+            // Llamar al método del modelo
+            $deletedCount = $this->reservationModel->deleteCancelledReservations();
+
+            // Registrar el número de reservaciones eliminadas
+            if ($deletedCount > 0) {
+                error_log("Reservaciones canceladas eliminadas automáticamente: " . $deletedCount);
+            }
+        } catch (\Exception $e) {
+            error_log("Error al eliminar reservaciones canceladas: " . $e->getMessage());
+        }
+    }
+
+    public function checkReservationConflict($data) {
+        // Validar que se proporcionen todos los datos necesarios
+        if (!isset($data['room_id'], $data['start_date'], $data['end_date'], $data['start_time'], $data['end_time'])) {
+            http_response_code(400);
+            echo json_encode(['error' => 'Faltan datos requeridos']);
+            return;
+        }
+    
+        // Extraer datos
+        $room_id = $data['room_id'];
+        $start_date = $data['start_date'];
+        $end_date = $data['end_date'];
+        $start_time = $data['start_time'];
+        $end_time = $data['end_time'];
+    
+        try {
+            // Verificar conflictos
+            $conflict = $this->reservationModel->checkReservationConflict($room_id, $start_date, $end_date, $start_time, $end_time);
+    
+            // Devolver el resultado
+            echo json_encode(['conflict' => $conflict]);
+        } catch (\Exception $e) {
+            http_response_code(500);
+            echo json_encode(['error' => 'Error al verificar conflictos de reservación']);
+        }
+    }
+
+    
 }
 ?>

@@ -1,4 +1,13 @@
 body {
-  background-color: #505050; /* Color de fondo claro */
-  color: #ffffff; /* Color de texto claro */
+  background-color: #dbdbdb; /* Color de fondo claro */
+  color: #000000; /* Color de texto claro */
+}
+
+.none_hover {
+  text-decoration: none; /* Elimina el subrayado del texto */
+}
+
+.none_hover:hover {
+  background-color: transparent; /* Elimina el cambio de color de fondo en hover */
+  color: inherit; /* Mantiene el color original en hover */
 }

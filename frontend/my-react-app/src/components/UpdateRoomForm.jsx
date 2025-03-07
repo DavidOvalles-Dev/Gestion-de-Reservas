@@ -44,12 +44,11 @@ const UpdateRoomForm = () => {
 
   useEffect(() => {
     console.log("Updated Form Data:", formData);
-  }, [formData]); // Observa cambios en formData
+  }, [formData]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    // Si el input es de tipo checkbox, usa 'checked' en lugar de 'value'
     const newValue = type === "checkbox" ? checked : value;
 
     setFormData({
@@ -57,7 +56,7 @@ const UpdateRoomForm = () => {
       [name]: newValue,
     });
 
-    console.log("Event:", name, newValue); // Muestra el nombre del campo y su nuevo valor
+    console.log("Event:", name, newValue);
   };
 
   const handleSubmit = async (e) => {
@@ -102,10 +101,19 @@ const UpdateRoomForm = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center">
-        <form onSubmit={handleSubmit}>
-          <label className="form-label">
-            Número de la Habitación:
+      <div
+        className="container-sm rounded p-4 shadow-lg border border-white"
+        style={{
+          maxWidth: "600px",
+          backdropFilter: "blur(10px)",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+          boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)",
+        }}
+      >
+        <h1 className="text-center text-dark">Editar Habitación</h1>
+        <form className="row" onSubmit={handleSubmit}>
+          <label className="form-label mb-4 text-dark">
+            Número de la Habitación
             <input
               className="form-control"
               type="text"
@@ -114,9 +122,9 @@ const UpdateRoomForm = () => {
               onChange={handleChange}
             />
           </label>
-          <br />
-          <label className="form-label">
-            Capacidad:
+
+          <label className="form-label mb-4 text-dark">
+            Capacidad
             <input
               className="form-control"
               type="number"
@@ -127,9 +135,9 @@ const UpdateRoomForm = () => {
               onChange={handleChange}
             />
           </label>
-          <br />
-          <label className="form-label">
-            Precio:
+
+          <label className="form-label mb-4 text-dark">
+            Precio
             <input
               className="form-control"
               type="number"
@@ -140,9 +148,9 @@ const UpdateRoomForm = () => {
               onChange={handleChange}
             />
           </label>
-          <br />
-          <label className="form-check form-switch form-check-lg">
-            Disponible:
+
+          <div className="checkbox d-flex align-items-center gap-2 text-dark mb-4">
+            <label className="form-check-label">Disponible</label>
             <input
               className="form-check-input"
               type="checkbox"
@@ -150,18 +158,20 @@ const UpdateRoomForm = () => {
               checked={formData.available}
               onChange={handleChange}
             />
-          </label>
-          <br />
-          <button className="btn btn-success" type="submit">
-            Actualizar Habitación
-          </button>
-          <button
-            className="btn btn-secondary"
-            type="button"
-            onClick={() => (window.location.href = "/rooms")}
-          >
-            Volver
-          </button>
+          </div>
+
+          <div className="d-grid gap-2">
+            <button className="btn btn-light fs-5" type="submit">
+              Actualizar Habitación
+            </button>
+            <button
+              className="btn btn-secondary fs-5"
+              type="button"
+              onClick={() => (window.location.href = "/rooms")}
+            >
+              Volver
+            </button>
+          </div>
         </form>
       </div>
     </>

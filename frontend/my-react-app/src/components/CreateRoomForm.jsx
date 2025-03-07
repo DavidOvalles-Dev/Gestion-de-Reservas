@@ -49,44 +49,50 @@ const CreateRoomForm = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center">
-      <form className="row" onSubmit={handleSubmit}>
-        <label className="form-label mb-5">
-          Numero de la Habitacion
-          <input
-            className="form-control"
-            type="text"
-            name="room_number"
-            value={formData.room_number}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label className="form-label mb-5">
-          Capacidad
-          <input
-            className="form-control"
-            type="text"
-            name="capacity"
-            value={formData.capacity}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <label className="form-label mb-3">
-          Precio
-          <input
-            className="form-control"
-            type="input"
-            name="price"
-            checked={formData.price}
-            onChange={handleChange}
-          />
-        </label>
-        <br />
-        <div className="checkbox d-flex ms-2 mb-3">
-          <label className="form-check form-switch form-check-lg">
-            Disponible
+    <>
+      <div
+        className="container-sm rounded p-4 shadow-lg border border-white"
+        style={{
+          maxWidth: "600px",
+          backdropFilter: "blur(10px)",
+          backgroundColor: "rgba(255, 255, 255, 0.2)",
+          boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)",
+        }}
+      >
+        <h1 className="text-center text-dark">Habitaciones</h1>
+        <form className="row" onSubmit={handleSubmit}>
+          <label className="form-label mb-4 text-dark">
+            Número de la Habitación
+            <input
+              className="form-control"
+              type="text"
+              name="room_number"
+              value={formData.room_number}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="form-label mb-4 text-dark">
+            Capacidad
+            <input
+              className="form-control"
+              type="text"
+              name="capacity"
+              value={formData.capacity}
+              onChange={handleChange}
+            />
+          </label>
+          <label className="form-label mb-4 text-dark">
+            Precio
+            <input
+              className="form-control"
+              type="text"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+            />
+          </label>
+          <div className="checkbox d-flex align-items-center gap-2 text-dark">
+            <label className="form-check-label">Disponible</label>
             <input
               className="form-check-input"
               type="checkbox"
@@ -94,14 +100,23 @@ const CreateRoomForm = () => {
               checked={formData.available}
               onChange={handleChange}
             />
-          </label>
-        </div>
-        <br />
-        <button className="btn btn-success" type="submit">
-          Crear Habitacion
-        </button>
-      </form>
-    </div>
+          </div>
+          <button
+            className="btn btn-success mt-3 fs-2 w-150 mb-2"
+            type="submit"
+          >
+            Crear Habitación
+          </button>
+          <button
+            className="btn btn-secondary fs-2 fs-5"
+            type="button"
+            onClick={() => (window.location.href = "/rooms")}
+          >
+            Volver
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 

@@ -10,7 +10,7 @@ class RoomModel {
     // Obtener todas las habitaciones
     public function getAllRooms() {
         $stmt = $this->pdo->query("SELECT * FROM rooms");
-        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Asegúrate de que esto devuelva solo JSON
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Obtener una habitación por ID
@@ -50,5 +50,20 @@ class RoomModel {
         $stmt->execute(['id' => $id]);
         return $stmt->rowCount() > 0; // Retorna true si se eliminó al menos una fila
     }
+
+    // Cambiar la disponibilidad de una habitación
+    public function changeAvailability($id, $available) {
+        error_log("🛠️ SQL: UPDATE rooms SET available = $available WHERE id = $id");
+    
+        $stmt = $this->pdo->prepare("UPDATE rooms SET available = :available WHERE id = :id");
+        $stmt->execute([
+            ':id' => $id,
+            ':available' => $available
+        ]);
+    
+        return $stmt->rowCount() > 0;
+    }
+    
+    
 }
 ?>

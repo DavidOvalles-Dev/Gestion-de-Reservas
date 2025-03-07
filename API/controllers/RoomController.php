@@ -100,5 +100,32 @@ class RoomController {
             echo json_encode(['error' => 'No se pudo eliminar la habitación']);
         }
     }
+    // Cambiar la disponibilidad de una habitación
+    public function changeAvailability() {
+        $id = $_GET['id']; // ID de la habitación
+        $input = json_decode(file_get_contents("php://input"), true);
+    
+        // 🛠️ REGISTRO PARA DEPURACIÓN
+        error_log("🔍 ID: $id - Disponible recibido: " . json_encode($input));
+    
+        if (!isset($input['available'])) {
+            echo json_encode(['error' => 'Disponibilidad no proporcionada']);
+            return;
+        }
+    
+        $available = $input['available'] == 1 ? 1 : 0;
+    
+        $result = $this->roomModel->changeAvailability($id, $available);
+    
+        if ($result) {
+            echo json_encode(['message' => 'Disponibilidad actualizada']);
+        } else {
+            echo json_encode(['error' => 'No se pudo actualizar']);
+        }
+    }
+    
+    
+    
+    
 }
 ?>

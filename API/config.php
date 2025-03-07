@@ -14,4 +14,7 @@ try {
     // Mostrar un mensaje de error si falla la conexión
     echo "Error al conectar a la base de datos: " . $e->getMessage();
 }
+
+
+
 ?>

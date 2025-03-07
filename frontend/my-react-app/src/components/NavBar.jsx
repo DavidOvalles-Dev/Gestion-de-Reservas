@@ -1,21 +1,51 @@
-import React from "react";
+// src/components/NavBar.jsx
+
+import React, { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
+import { isAuthenticated, getUserRole, getCurrentUser } from "../../utils/auth";
+import Swal from "sweetalert2";
 
-/**
- * NavBar component renders a responsive navigation bar.
- *
- * @component
- * @returns {JSX.Element} A dynamic navigation bar with active class highlighting.
- */
 const NavBar = () => {
-  const location = useLocation(); // Obtener la ruta actual
+  const location = useLocation();
+  const [isLogged, setIsLogged] = useState(false);
+  const [userRole, setUserRole] = useState(null);
+  const [user, setUser] = useState(null);
 
-  // Clases dinámicas para marcar el enlace activo
+  useEffect(() => {
+    const checkAuth = () => {
+      setIsLogged(isAuthenticated());
+      setUserRole(getUserRole());
+      setUser(getCurrentUser());
+    };
+    checkAuth();
+  }, [location]);
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Cerrar sesión",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Sí",
+      cancelButtonText: "Cancelar",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        window.location.reload();
+      }
+    });
+  };
+  {
+    console.log("User:", user);
+  }
   const isActive = (path) =>
     location.pathname === path ? "nav-link active" : "nav-link";
 
   return (
-    <nav className="navbar navbar-expand-lg bg-light" data-bs-theme="light">
+    <nav className="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
       <div className="container-fluid">
         <a className="navbar-brand" href="#">
           Flavor Haven
@@ -24,44 +54,114 @@ const NavBar = () => {
           className="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarColor03"
-          aria-controls="navbarColor03"
+          data-bs-target="#navbarColor01"
+          aria-controls="navbarColor01"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarColor03">
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <NavLink to="/home" className={isActive("/home")}>
-                Home
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/create-room" className={isActive("/create-room")}>
-                Crear habitacion
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/rooms" className={isActive("/rooms")}>
-                Habitaciones
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink to="/reservations" className={isActive("/reservations")}>
-                Reservaciones
-              </NavLink>
-            </li>
-            <li className="nav-item">
-              <NavLink
-                to="/create-reservation"
-                className={isActive("/create-reservation")}
-              >
-                Crear reservacion
-              </NavLink>
-            </li>
-          </ul>
+        <div className="collapse navbar-collapse" id="navbarColor01">
+          {isLogged && user && userRole === "user" && (
+            <>
+              <ul className="navbar-nav me-auto">
+                <li className="nav-item">
+                  <NavLink to="/home" className={isActive("/home")}>
+                    Home
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/rooms" className={isActive("/rooms")}>
+                    Habitaciones
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/reservations"
+                    className={isActive("/reservations")}
+                  >
+                    Mis Reservaciones
+                  </NavLink>
+                </li>
+              </ul>
+              <div className="d-flex ms-auto align-items-center">
+                <span className="nav-link text-light me-3">
+                  Bienvenido, {user}!
+                </span>
+                <button
+                  className="btn btn-link text-light"
+                  onClick={handleLogout}
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
+            </>
+          )}
+          {isLogged && user && userRole === "admin" && (
+            <>
+              <ul className="navbar-nav me-auto">
+                <li className="nav-item">
+                  <NavLink to="/home" className={isActive("/home")}>
+                    Home
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/create-room"
+                    className={isActive("/create-room")}
+                  >
+                    Crear Habitación
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink to="/rooms" className={isActive("/rooms")}>
+                    Habitaciones
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/reservations"
+                    className={isActive("/reservations")}
+                  >
+                    Reservaciones
+                  </NavLink>
+                </li>
+                <li className="nav-item">
+                  <NavLink
+                    to="/create-reservation"
+                    className={isActive("/create-reservation")}
+                  >
+                    Crear Reservación
+                  </NavLink>
+                </li>
+              </ul>
+              <div className="d-flex ms-auto align-items-center">
+                <span className="nav-link text-light me-3">
+                  Bienvenido, {user}!
+                </span>
+                <button
+                  className="btn btn-link text-light"
+                  onClick={handleLogout}
+                >
+                  Cerrar Sesión
+                </button>
+              </div>
+            </>
+          )}
+          {!isLogged && (
+            <div className="loginPartial navbar-nav ms-auto">
+              <li className="nav-item">
+                <NavLink to="/login" className={isActive("/login")}>
+                  Iniciar Sesión
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/register" className={isActive("/register")}>
+                  Registrarse
+                </NavLink>
+              </li>
+            </div>
+          )}
         </div>
       </div>
     </nav>

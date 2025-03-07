@@ -119,12 +119,18 @@ const UpdateReservationForm = () => {
   };
 
   return (
-    <div className="d-flex justify-content-center">
-      <form className="container row" onSubmit={handleSubmit}>
-        <h2 className="text-center">Editar Reservación</h2>
-
-        {/* Campo para seleccionar la habitación */}
-        <label className="form-label mb-3">
+    <div
+      className="container-sm rounded p-4 shadow-lg border border-white"
+      style={{
+        maxWidth: "600px",
+        backdropFilter: "blur(10px)",
+        backgroundColor: "rgba(255, 255, 255, 0.2)",
+        boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)",
+      }}
+    >
+      <h2 className="text-center text-dark">Editar Reservación</h2>
+      <form className="row" onSubmit={handleSubmit}>
+        <label className="form-label mb-4 text-dark">
           Habitación:
           <select
             className="form-select"
@@ -140,10 +146,8 @@ const UpdateReservationForm = () => {
             ))}
           </select>
         </label>
-        <br />
 
-        {/* Campo para el nombre del cliente */}
-        <label className="form-label mb-3">
+        <label className="form-label mb-4 text-dark">
           Nombre del Cliente:
           <input
             className="form-control"
@@ -153,9 +157,8 @@ const UpdateReservationForm = () => {
             onChange={handleChange}
           />
         </label>
-        <br />
 
-        <label className="form-label col-6">
+        <label className="form-label mb-4 text-dark">
           Fecha de Inicio:
           <input
             className="form-control"
@@ -165,9 +168,7 @@ const UpdateReservationForm = () => {
             onChange={handleChange}
           />
         </label>
-        <br />
-
-        <label className="form-label col-6">
+        <label className="form-label mb-4 text-dark">
           Fecha de Fin:
           <input
             className="form-control"
@@ -177,9 +178,8 @@ const UpdateReservationForm = () => {
             onChange={handleChange}
           />
         </label>
-        <br />
 
-        <label className="form-label col-6">
+        <label className="form-label mb-4 text-dark">
           Hora de Inicio:
           <input
             className="form-control"
@@ -189,9 +189,7 @@ const UpdateReservationForm = () => {
             onChange={handleChange}
           />
         </label>
-        <br />
-
-        <label className="form-label col-6 mb-3">
+        <label className="form-label mb-4 text-dark">
           Hora de Fin:
           <input
             className="form-control"
@@ -202,10 +200,7 @@ const UpdateReservationForm = () => {
           />
         </label>
 
-        <br />
-
-        {/* Campo para el estado */}
-        <label className="form-label mb-5">
+        <label className="form-label mb-4 text-dark">
           Estado:
           <select
             className="form-select"
@@ -218,20 +213,17 @@ const UpdateReservationForm = () => {
             <option value="cancelled">Cancelada</option>
           </select>
         </label>
-        <br />
-        <div className="buttons row mb-5 d-flex justify-content-center">
-          <button className="btn btn-success ms-4 col-5" type="submit">
-            Actualizar Reservación
-          </button>
-          <div className="col-1" />
-          <button
-            className="btn btn-secondary  col-5"
-            type="button"
-            onClick={() => navigate("/reservations")}
-          >
-            Volver
-          </button>
-        </div>
+
+        <button className="btn btn-success mt-3 fs-2 w-100 mb-2" type="submit">
+          Actualizar Reservación
+        </button>
+        <button
+          className="btn btn-secondary fs-2 fs-5"
+          type="button"
+          onClick={() => navigate("/reservations")}
+        >
+          Volver
+        </button>
       </form>
     </div>
   );
