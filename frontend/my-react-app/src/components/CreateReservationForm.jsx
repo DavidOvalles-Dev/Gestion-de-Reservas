@@ -191,7 +191,7 @@ const ReservationForm = () => {
 
   return (
     <div
-      className="container-sm rounded p-4 shadow-lg border border-white"
+      className="bg-dark container-sm rounded p-4 shadow-lg border border-white"
       style={{
         maxWidth: "600px",
         backdropFilter: "blur(10px)",
@@ -199,7 +199,7 @@ const ReservationForm = () => {
         boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)",
       }}
     >
-      <h1 className="text-center text-dark">Reservaciones</h1>
+      <h1 className="text-center text-white">Reservaciones</h1>
       <form onSubmit={handleSubmit} className="row">
         {!isLogged && (
           <div className="alert alert-danger" role="alert">
@@ -209,7 +209,7 @@ const ReservationForm = () => {
 
         {isLogged && (
           <>
-            <label className="form-label mb-4 text-dark">
+            <label className="form-label mb-4 text-white">
               Habitación:
               {room_id ? (
                 <input
@@ -234,7 +234,7 @@ const ReservationForm = () => {
               )}
             </label>
 
-            <label className="form-label mb-4 text-dark">
+            <label className="form-label mb-4 text-white">
               Nombre del Cliente:
               <input
                 className="form-control"
@@ -246,7 +246,7 @@ const ReservationForm = () => {
               />
             </label>
 
-            <label className="form-label mb-4 text-dark">
+            <label className="form-label mb-4 text-white">
               Fecha de Inicio:
               <input
                 className="form-control"
@@ -256,7 +256,7 @@ const ReservationForm = () => {
                 onChange={handleChange}
               />
             </label>
-            <label className="form-label mb-4 text-dark">
+            <label className="form-label mb-4 text-white">
               Fecha de Fin:
               <input
                 className="form-control"
@@ -267,7 +267,7 @@ const ReservationForm = () => {
               />
             </label>
 
-            <label className="form-label mb-4 text-dark">
+            <label className="form-label mb-4 text-white">
               Hora de Inicio:
               <input
                 className="form-control"
@@ -277,7 +277,7 @@ const ReservationForm = () => {
                 onChange={handleChange}
               />
             </label>
-            <label className="form-label mb-4 text-dark">
+            <label className="form-label mb-4 text-white">
               Hora de Fin:
               <input
                 className="form-control"
@@ -289,7 +289,7 @@ const ReservationForm = () => {
             </label>
 
             {userRole === "admin" && (
-              <label className="form-label mb-4 text-dark">
+              <label className="form-label mb-4 text-white">
                 Estado:
                 <select
                   className="form-select"

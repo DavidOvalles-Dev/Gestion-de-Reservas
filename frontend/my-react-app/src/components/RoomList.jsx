@@ -172,12 +172,12 @@ const RoomList = () => {
                   <>
                     <Link
                       to={`/edit-room/${room.id}`}
-                      className="btn btn-secondary me-3"
+                      className="btn btn-secondary me-3 fs-5"
                     >
                       Editar
                     </Link>
                     <button
-                      className="btn   btn-danger me-3"
+                      className="btn   btn-danger me-3 fs-5"
                       onClick={() => handleDelete(room.id)}
                     >
                       Eliminar
@@ -187,7 +187,9 @@ const RoomList = () => {
                         changeAvailability(room.id, room.available)
                       }
                       className={
-                        room.available ? "btn btn-warning" : "btn btn-success"
+                        room.available
+                          ? "btn btn-warning fs-5"
+                          : "btn btn-success fs-5"
                       }
                     >
                       {room.available

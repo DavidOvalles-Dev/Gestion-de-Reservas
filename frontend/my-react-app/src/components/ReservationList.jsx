@@ -200,18 +200,18 @@ const ReservationList = () => {
                       <div className="d-flex gap-3">
                         <Link
                           to={`/ReservationDetails/${res.id}`}
-                          className="btn btn-primary"
+                          className="btn btn-primary fs-5"
                         >
                           Detalles
                         </Link>
                         <Link
                           to={`/edit-reservation/${res.id}`}
-                          className="btn btn-warning"
+                          className="btn btn-warning fs-5"
                         >
                           Editar
                         </Link>
                         <button
-                          className="btn btn-danger"
+                          className="btn btn-danger fs-5"
                           onClick={() => handleDelete(res.id)}
                         >
                           Eliminar

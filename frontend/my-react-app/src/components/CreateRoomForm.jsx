@@ -51,7 +51,7 @@ const CreateRoomForm = () => {
   return (
     <>
       <div
-        className="container-sm rounded p-4 shadow-lg border border-white"
+        className="bg-dark container-sm rounded p-4 shadow-lg border border-white"
         style={{
           maxWidth: "600px",
           backdropFilter: "blur(10px)",
@@ -59,9 +59,9 @@ const CreateRoomForm = () => {
           boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)",
         }}
       >
-        <h1 className="text-center text-dark">Habitaciones</h1>
+        <h1 className="text-center text-white">Habitaciones</h1>
         <form className="row" onSubmit={handleSubmit}>
-          <label className="form-label mb-4 text-dark">
+          <label className="form-label mb-4 text-white fs-5">
             Número de la Habitación
             <input
               className="form-control"
@@ -71,7 +71,7 @@ const CreateRoomForm = () => {
               onChange={handleChange}
             />
           </label>
-          <label className="form-label mb-4 text-dark">
+          <label className="form-label mb-4 text-white">
             Capacidad
             <input
               className="form-control"
@@ -81,7 +81,7 @@ const CreateRoomForm = () => {
               onChange={handleChange}
             />
           </label>
-          <label className="form-label mb-4 text-dark">
+          <label className="form-label mb-4 text-white">
             Precio
             <input
               className="form-control"
@@ -91,7 +91,7 @@ const CreateRoomForm = () => {
               onChange={handleChange}
             />
           </label>
-          <div className="checkbox d-flex align-items-center gap-2 text-dark">
+          <div className="checkbox d-flex align-items-center gap-2 text-white">
             <label className="form-check-label">Disponible</label>
             <input
               className="form-check-input"

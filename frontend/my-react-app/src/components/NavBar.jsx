@@ -66,30 +66,30 @@ const NavBar = () => {
             <>
               <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                  <NavLink to="/home" className={isActive("/home")}>
+                  <NavLink to="/home" className={`${isActive("/home")} fs-5`}>
                     Home
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/rooms" className={isActive("/rooms")}>
+                  <NavLink to="/rooms" className={`${isActive("/rooms")} fs-5`}>
                     Habitaciones
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
                     to="/reservations"
-                    className={isActive("/reservations")}
+                    className={`${isActive("/reservations")} fs-5`}
                   >
                     Mis Reservaciones
                   </NavLink>
                 </li>
               </ul>
               <div className="d-flex ms-auto align-items-center">
-                <span className="nav-link text-light me-3">
+                <span className="nav-link text-light me-3 fs-5">
                   Bienvenido, {user}!
                 </span>
                 <button
-                  className="btn btn-link text-light"
+                  className="btn btn-link text-light fs-5"
                   onClick={handleLogout}
                 >
                   Cerrar Sesión
@@ -101,27 +101,27 @@ const NavBar = () => {
             <>
               <ul className="navbar-nav me-auto">
                 <li className="nav-item">
-                  <NavLink to="/home" className={isActive("/home")}>
+                  <NavLink to="/home" className={`${isActive("/home")} fs-5`}>
                     Home
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
                     to="/create-room"
-                    className={isActive("/create-room")}
+                    className={`${isActive("/create-room")} fs-5`}
                   >
                     Crear Habitación
                   </NavLink>
                 </li>
                 <li className="nav-item">
-                  <NavLink to="/rooms" className={isActive("/rooms")}>
+                  <NavLink to="/rooms" className={`${isActive("/rooms")} fs-5`}>
                     Habitaciones
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
                     to="/reservations"
-                    className={isActive("/reservations")}
+                    className={`${isActive("/reservations")} fs-5`}
                   >
                     Reservaciones
                   </NavLink>
@@ -129,18 +129,18 @@ const NavBar = () => {
                 <li className="nav-item">
                   <NavLink
                     to="/create-reservation"
-                    className={isActive("/create-reservation")}
+                    className={`${isActive("/create-reservation")} fs-5`}
                   >
                     Crear Reservación
                   </NavLink>
                 </li>
               </ul>
               <div className="d-flex ms-auto align-items-center">
-                <span className="nav-link text-light me-3">
+                <span className="nav-link text-light me-3 fs-5">
                   Bienvenido, {user}!
                 </span>
                 <button
-                  className="btn btn-link text-light"
+                  className="btn btn-link text-light fs-5"
                   onClick={handleLogout}
                 >
                   Cerrar Sesión

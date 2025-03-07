@@ -120,7 +120,7 @@ const UpdateReservationForm = () => {
 
   return (
     <div
-      className="container-sm rounded p-4 shadow-lg border border-white"
+      className="bg-dark container-sm rounded p-4 shadow-lg border border-white"
       style={{
         maxWidth: "600px",
         backdropFilter: "blur(10px)",
@@ -128,9 +128,9 @@ const UpdateReservationForm = () => {
         boxShadow: "0px 0px 10px rgba(255, 255, 255, 0.5)",
       }}
     >
-      <h2 className="text-center text-dark">Editar Reservación</h2>
+      <h2 className="text-center text-white">Editar Reservación</h2>
       <form className="row" onSubmit={handleSubmit}>
-        <label className="form-label mb-4 text-dark">
+        <label className="form-label mb-4 text-white">
           Habitación:
           <select
             className="form-select"
@@ -147,7 +147,7 @@ const UpdateReservationForm = () => {
           </select>
         </label>
 
-        <label className="form-label mb-4 text-dark">
+        <label className="form-label mb-4 text-white">
           Nombre del Cliente:
           <input
             className="form-control"
@@ -158,7 +158,7 @@ const UpdateReservationForm = () => {
           />
         </label>
 
-        <label className="form-label mb-4 text-dark">
+        <label className="form-label mb-4 text-white">
           Fecha de Inicio:
           <input
             className="form-control"
@@ -168,7 +168,7 @@ const UpdateReservationForm = () => {
             onChange={handleChange}
           />
         </label>
-        <label className="form-label mb-4 text-dark">
+        <label className="form-label mb-4 text-white">
           Fecha de Fin:
           <input
             className="form-control"
@@ -179,7 +179,7 @@ const UpdateReservationForm = () => {
           />
         </label>
 
-        <label className="form-label mb-4 text-dark">
+        <label className="form-label mb-4 text-white">
           Hora de Inicio:
           <input
             className="form-control"
@@ -189,7 +189,7 @@ const UpdateReservationForm = () => {
             onChange={handleChange}
           />
         </label>
-        <label className="form-label mb-4 text-dark">
+        <label className="form-label mb-4 text-white">
           Hora de Fin:
           <input
             className="form-control"
@@ -200,7 +200,7 @@ const UpdateReservationForm = () => {
           />
         </label>
 
-        <label className="form-label mb-4 text-dark">
+        <label className="form-label mb-4 text-white">
           Estado:
           <select
             className="form-select"
