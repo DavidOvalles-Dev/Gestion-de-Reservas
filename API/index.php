@@ -1,23 +1,34 @@
 <?php
-header('Content-Type: application/json'); // Indica que la respuesta será en formato JSON
-
-// Habilitar CORS
+// 1. CORS headers
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 
-// Definir la ruta base del proyecto
-define('ROOT_PATH', __DIR__); // __DIR__ es la ruta absoluta del directorio actual
-
-// Manejar solicitudes OPTIONS para CORS
+// 2. Responder inmediatamente a las preflight requests
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    header("HTTP/1.1 200 OK");
+    http_response_code(200);
     exit;
 }
 
-require_once ROOT_PATH . '/config.php'; // Conexión a la base de datos
-require_once ROOT_PATH . '/routes.php'; // Rutas
+// 3. Errores y JSON por defecto
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+header('Content-Type: application/json');
 
-$reservationController->deleteCancelledReservations();
+// 4. Definir ruta base
+define('ROOT_PATH', __DIR__);
 
-?>
+if (!isset($_GET['action']) && isset($_SERVER['PATH_INFO'])) {
+    // Elimina la barra inicial del PATH_INFO
+    $pathInfo = ltrim($_SERVER['PATH_INFO'], '/');
+    // Divide la cadena en pares clave=valor si quieres
+    parse_str($pathInfo, $queryParams);
+    // Mezcla con $_GET
+    $_GET = array_merge($_GET, $queryParams);
+}
+
+
+// 5. Resto del sistema
+require_once ROOT_PATH . '/config.php';
+require_once ROOT_PATH . '/routes.php';

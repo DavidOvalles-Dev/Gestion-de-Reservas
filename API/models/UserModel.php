@@ -7,8 +7,6 @@ class UserModel {
         $this->pdo = $pdo;
     }
 
-    //verificar si un usuario existe por su nombre de usuario
-
     public function getUserByUsername($username) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = ?");
         $stmt->execute([$username]);
