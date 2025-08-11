@@ -16,7 +16,12 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await api.post("?action=login", { username, password });
+      const response = await api.post("", { username, password }, {
+      params: { action: "login" }
+      });
+
+
+      console.log("Ruta:", response.config.url);
 
       console.log("API Response:", response.data); // Depuración
 

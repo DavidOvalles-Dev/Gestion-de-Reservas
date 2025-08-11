@@ -1,5 +1,5 @@
 // src/components/RoomList.jsx
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -23,7 +23,7 @@ const RoomList = () => {
     const fetchRooms = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8012/sistema_de_reservas/API/index.php?action=getRooms"
+          "http://localhost/Gestion-de-Reservas/API/index.php?action=getRooms"
         );
         setRooms(response.data);
         console.log("API Response:", response.data);

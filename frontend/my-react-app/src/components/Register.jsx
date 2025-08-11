@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import api from "../api";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +26,7 @@ const Register = () => {
 
       // Ahora intentamos iniciar sesión automáticamente
       const loginResponse = await api.post(
-        "http://localhost:8012/sistema_de_reservas/API/index.php?action=login",
+        "http://localhost/Gestion-de-Reservas/API/index.php?action=login",
         JSON.stringify({ username, password }),
         {
           headers: { "Content-Type": "application/json" },

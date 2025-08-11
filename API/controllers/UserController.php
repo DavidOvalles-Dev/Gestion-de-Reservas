@@ -61,7 +61,8 @@ class UserController {
     public function login($data) {
         if (!isset($data['username']) || !isset($data['password'])) {
             http_response_code(400);
-            echo json_encode(['error' => 'Faltan datos requeridos']);
+
+            echo json_encode(['error' => 'Faltan datos requeridos', 'data' => $data]);
             return;
         }
 
@@ -172,7 +173,11 @@ class UserController {
             }
         } catch (\Exception $e) {
             http_response_code(500);
-            echo json_encode(['error' => 'Error interno del servidor']);
+            echo json_encode([
+                'error' => 'Error interno del servidor',
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
         }
     }
 

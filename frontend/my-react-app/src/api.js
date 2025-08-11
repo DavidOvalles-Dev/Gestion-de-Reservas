@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:8012/sistema_de_reservas/API/",
+  baseURL: "http://localhost/Gestion-de-Reservas/API/index.php?",
 });
 
 // Agregar el token JWT al encabezado Authorization
