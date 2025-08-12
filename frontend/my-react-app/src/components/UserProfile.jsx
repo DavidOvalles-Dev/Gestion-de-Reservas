@@ -1,6 +1,6 @@
 // src/components/UserProfile.jsx
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserInfo, isAuthenticated } from "../../utils/auth"; // Importar funciones de autenticación
 
 const UserProfile = () => {

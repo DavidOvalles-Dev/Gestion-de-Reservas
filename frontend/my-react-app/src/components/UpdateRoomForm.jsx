@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
 
 const UpdateRoomForm = () => {
@@ -13,11 +12,11 @@ const UpdateRoomForm = () => {
     price: "",
     available: false,
   });
-  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchRooms = async () => {
-      const apiUrl = `http://localhost:8012/sistema_de_reservas/API/index.php?action=getRoomById&id=${roomId}`;
+      const apiUrl = `http://localhost/Gestion-de-Reservas/API/index.php?action=getRoomById&id=${roomId}`;
       try {
         const response = await axios.get(apiUrl);
         console.log("API Response:", response.data);
@@ -76,10 +75,12 @@ const UpdateRoomForm = () => {
       return;
     }
 
+    console.log("Form Data Before Submit:", formData);
+
     try {
       console.log("Form Data Submitted:", formData);
       const response = await axios.put(
-        "http://localhost:8012/sistema_de_reservas/API/index.php?action=updateRoom",
+        `http://localhost/Gestion-de-Reservas/API/index.php?action=updateRoom&id=${roomId}`,
         formData
       );
       console.log("API Response:", response);

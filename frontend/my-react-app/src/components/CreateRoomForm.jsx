@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import {useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert2";
@@ -28,7 +28,7 @@ const CreateRoomForm = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8012/sistema_de_reservas/API/index.php?action=createRoom",
+        "http://localhost/Gestion-de-Reservas/API/index.php?action=createRoom",
         formData
       );
       console.log("API Response:", response.data);

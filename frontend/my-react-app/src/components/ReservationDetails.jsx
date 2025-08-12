@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -24,13 +24,13 @@ const ReservationDetails = () => {
     const fetchReservationAndRoom = async () => {
       try {
         const reservationResponse = await axios.get(
-          `http://localhost:8012/sistema_de_reservas/API/index.php?action=getReservationById&id=${reservationId}`
+          `http://localhost/Gestion-de-Reservas/API/index.php?action=getReservationById&id=${reservationId}`
         );
         setReservation(reservationResponse.data);
 
         // Obtener los datos de la habitación
         const roomResponse = await axios.get(
-          `http://localhost:8012/sistema_de_reservas/API/index.php?action=getRoomById&id=${reservationResponse.data.room_id}`
+          `http://localhost/Gestion-de-Reservas/API/index.php?action=getRoomById&id=${reservationResponse.data.room_id}`
         );
         setRoom(roomResponse.data);
       } catch (error) {
@@ -38,6 +38,7 @@ const ReservationDetails = () => {
           icon: "error",
           title: "Oops...",
           text: "Error al cargar los detalles de la reservación.",
+          footer: `<p>${error.message}</p>`,
         });
       }
     };

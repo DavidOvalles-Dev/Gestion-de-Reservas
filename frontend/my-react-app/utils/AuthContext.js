@@ -1,5 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect } from "react";
 import { isAuthenticated, getUserRole } from "../utils/auth";
+import PropTypes from "prop-types";
 
 export const AuthContext = createContext();
 
@@ -10,7 +11,6 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     // Verificar autenticación al cargar la aplicación
     const checkAuth = () => {
-      a;
       setIsAuthenticatedState(isAuthenticated());
       setUserRoleState(getUserRole());
     };
@@ -44,4 +44,8 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+AuthProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

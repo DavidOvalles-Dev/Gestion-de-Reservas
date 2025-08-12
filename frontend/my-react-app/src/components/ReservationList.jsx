@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthContext.jsx";
-import { isAuthenticated, getUserRole, getCurrentUser } from "../../utils/auth";
+import { getCurrentUser } from "../../utils/auth";
 
 const ReservationList = () => {
   const [reservations, setReservations] = useState([]);
@@ -26,7 +26,7 @@ const ReservationList = () => {
     const fetchReservations = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8012/sistema_de_reservas/API/index.php?action=getReservations"
+          "http://localhost/Gestion-de-Reservas/API/index.php?action=getReservations"
         );
         setReservations(response.data);
 
@@ -45,7 +45,7 @@ const ReservationList = () => {
           for (const res of reservationsToCheck) {
             try {
               await axios.put(
-                `http://localhost:8012/sistema_de_reservas/API/index.php?action=updateReservation&id=${res.id}`,
+                `http://localhost/Gestion-de-Reservas/API/index.php?action=getReservationById&id=${res.id}`,
                 {
                   status: "canceled",
                 }
@@ -61,6 +61,7 @@ const ReservationList = () => {
           icon: "error",
           title: "Oops...",
           text: "Error al cargar las reservaciones.",
+          footer: `<p>${error.message}</p>`,
         });
       }
     };
@@ -76,7 +77,7 @@ const ReservationList = () => {
         for (const res of reservations) {
           try {
             const roomResponse = await axios.get(
-              `http://localhost:8012/sistema_de_reservas/API/index.php?action=getRoomById&id=${res.room_id}`
+              `http://localhost/Gestion-de-Reservas/API/index.php?action=getRoomById&id=${res.room_id}`
             );
             roomData.push(roomResponse.data);
           } catch (error) {
@@ -104,7 +105,7 @@ const ReservationList = () => {
     if (result.isConfirmed) {
       try {
         await axios.delete(
-          `http://localhost:8012/sistema_de_reservas/API/index.php?action=deleteReservation&id=${id}`
+          `http://localhost/Gestion-de-Reservas/API/index.php?action=deleteReservation&id=${id}`
         );
         Swal.fire("Eliminado", "La reservación ha sido eliminada.", "success");
         setReservations(reservations.filter((res) => res.id !== id));
@@ -113,6 +114,7 @@ const ReservationList = () => {
           icon: "error",
           title: "Oops...",
           text: "Error al eliminar la reservación.",
+          footer: `<p>${error.message}</p>`,
         });
       }
     }
@@ -169,6 +171,7 @@ const ReservationList = () => {
                 <th>Cliente</th>
                 <th>Inicio</th>
                 <th>Fin</th>
+                <th>Precio</th>
                 <th>Estado</th>
                 <th>Acción</th>
               </tr>
@@ -180,13 +183,7 @@ const ReservationList = () => {
                   res.room_number = room.room_number;
                   res.price = room.price;
                 }
-                const finalPrice = res.price
-                  ? `$${calculatePrice(
-                      res.start_date,
-                      res.end_date,
-                      res.price
-                    )}`
-                  : "No disponible";
+                const finalPrice = res.price ? `$${res.price}` : "No disponible";
 
                 return (
                   <tr key={res.id}>
@@ -195,6 +192,7 @@ const ReservationList = () => {
                     <td>{res.user_name || "Sin cliente"}</td>
                     <td>{formatTime(res.start_time)}</td>
                     <td>{formatTime(res.end_time)}</td>
+                    <td>{finalPrice}</td>
                     <td className={getStatusColor(res.status)}>{res.status}</td>
                     <td>
                       <div className="d-flex gap-3">

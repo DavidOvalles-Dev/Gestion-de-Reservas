@@ -1,6 +1,6 @@
 // src/components/ReservationForm.jsx
 
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,7 +10,9 @@ import { useNavigate } from "react-router-dom";
 const ReservationForm = () => {
   const navigate = useNavigate();
   const { room_id } = useParams();
-  const [habitacion, setHabitacion] = useState(null);
+  const [habitacion, setHabitacion] = useState(
+    {"id":0,"room_number":"","capacity":1,"price":"0","available":1,"created_at":"2025-00-00 00:00:00"}
+  );
   const [rooms, setRooms] = useState([]);
   const [formData, setFormData] = useState({
     room_id: room_id || "",
@@ -49,16 +51,18 @@ const ReservationForm = () => {
       const fetchRoomById = async () => {
         try {
           const response = await axios.get(
-            `http://localhost:8012/sistema_de_reservas/API/index.php?action=getRoomById&id=${room_id}`
+            `http://localhost/Gestion-de-Reservas/API/index.php?action=getRoomById&id=${room_id}`
           );
           console.log("Room Data:", response.data);
           setHabitacion(response.data);
           setFormData((prevData) => ({ ...prevData, ...response.data })); // Actualizar formData con los datos de la habitación
+          console.log("Form Data after room fetch:", formData);
         } catch (error) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
             text: "Error al cargar los datos de la habitación.",
+            footer: `<p>${error.message}</p>`,
           });
         }
       };
@@ -69,14 +73,16 @@ const ReservationForm = () => {
     const fetchRooms = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8012/sistema_de_reservas/API/index.php?action=getRooms"
+          "http://localhost/Gestion-de-Reservas/API/index.php?action=getRooms"
         );
+        console.log
         setRooms(response.data);
       } catch (error) {
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: "Error al cargar las habitaciones.",
+          footer: `<p>${error.message}</p>`,
         });
       }
     };
@@ -89,11 +95,26 @@ const ReservationForm = () => {
   // Manejar cambios en el formulario
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log("Campo cambiado:", name, "Nuevo valor:", value);
     setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+    if (name === "room_id") {
+      const selectedRoom = rooms.find((room) => room.id === Number(value));
+      if (selectedRoom) {
+        setFormData((prevData) => ({
+          ...prevData,
+          price: selectedRoom.price,
+        }));
+        console.log("Precio de la habitación seleccionado:", formData.price);
+      }
+    }
+
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    console.log(rooms);
 
     // Combinar fecha y hora de inicio y fin
     const startDateTime = new Date(
@@ -110,8 +131,16 @@ const ReservationForm = () => {
     // Calcular el número de días (redondeado hacia arriba)
     const priceMultiplier = Math.ceil(hoursDifference / 24);
 
-    // Obtener el precio base de la habitación (precio por día)
-    const basePrice = habitacion?.price || 0; // Valor predeterminado si no hay precio
+    console.log("Form Data:", formData);
+
+    let basePrice;
+    if (habitacion.price || habitacion.price === 0) {
+      basePrice = formData.price;
+    } else {
+      basePrice = habitacion.price; 
+    }
+
+    console.log("base price antes del cálculo:", basePrice);
 
     // Calcular el precio total (precio base * número de días)
     const updatedPrice = basePrice * priceMultiplier;
@@ -160,7 +189,7 @@ const ReservationForm = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8012/sistema_de_reservas/API/index.php?action=createReservation",
+        "http://localhost/Gestion-de-Reservas/API/index.php?action=createReservation",
         updatedFormData // Enviar el objeto actualizado
       );
 
@@ -185,6 +214,7 @@ const ReservationForm = () => {
         icon: "error",
         title: "Oops...",
         text: "Error al crear la reservación.",
+        footer: `<p>${error.message}</p>`,
       });
     }
   };

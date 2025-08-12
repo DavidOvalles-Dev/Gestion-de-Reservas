@@ -4,22 +4,14 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../contexts/AuthContext.jsx";
-import { isAuthenticated, getUserRole, getCurrentUser } from "../../utils/auth";
-
 const RoomList = () => {
   const navigate = useNavigate();
   const { userRoleState } = useContext(AuthContext); // Obtener el rol del usuario
 
-  const [isLogged, setIsLogged] = useState(false);
-  const [user, setUser] = useState(null);
+
   const [rooms, setRooms] = useState([]);
 
   useEffect(() => {
-    const checkAuth = () => {
-      setIsLogged(isAuthenticated());
-      setUser(getCurrentUser());
-    };
-
     const fetchRooms = async () => {
       try {
         const response = await axios.get(
@@ -37,7 +29,6 @@ const RoomList = () => {
       }
     };
 
-    checkAuth();
     fetchRooms();
   }, []);
 
@@ -56,7 +47,7 @@ const RoomList = () => {
     if (result.isConfirmed) {
       try {
         await axios.delete(
-          `http://localhost:8012/sistema_de_reservas/API/index.php?action=deleteRoom&id=${id}`
+          `http://localhost/Gestion-de-Reservas/API/index.php?action=deleteRoom&id=${id}`
         );
         Swal.fire("Eliminado", "La habitación ha sido eliminada.", "success");
         setRooms((prevRooms) => prevRooms.filter((room) => room.id !== id));
@@ -104,7 +95,7 @@ const RoomList = () => {
 
     try {
       await axios.put(
-        `http://localhost:8012/sistema_de_reservas/API/index.php?action=changeAvailability&id=${id}`,
+        `http://localhost/Gestion-de-Reservas/API/index.php?action=changeAvailability&id=${id}`,
         { available: newAvailability },
         { headers: { "Content-Type": "application/json" } }
       );

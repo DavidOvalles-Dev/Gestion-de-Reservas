@@ -16,7 +16,7 @@ const Register = () => {
     try {
       console.log("Registrando usuario...");
       await api.post(
-        "?action=register",
+        "http://localhost/Gestion-de-Reservas/API/index.php?action=register",
         JSON.stringify({ username, password }),
         {
           headers: { "Content-Type": "application/json" },

@@ -11,6 +11,7 @@ export const isAuthenticated = () => {
     if (payload.exp < currentTime) return false; // El token ha expirado
     return true; // Token válido
   } catch (error) {
+    console.log("Error al decodificar el token:", error);
     return false; // Error al decodificar el token
   }
 };
@@ -23,6 +24,7 @@ export const getUserRole = () => {
     const payload = JSON.parse(atob(token.split(".")[1]));
     return payload.role || "user"; // Devuelve el rol del usuario (o 'user' por defecto)
   } catch (error) {
+    console.log("Error al decodificar el token:", error);
     return null; // Error al decodificar el token
   }
 };
